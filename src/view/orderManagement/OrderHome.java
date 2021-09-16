@@ -42,6 +42,8 @@ public class OrderHome extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         contentPanel = new javax.swing.JPanel();
+        itemValidationLabel = new javax.swing.JLabel();
+        customerValidationLabel = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         searchjTextField = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -71,11 +73,11 @@ public class OrderHome extends javax.swing.JInternalFrame {
         jLabel17 = new javax.swing.JLabel();
         orderIDLabel = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
-        itemValidationLabel = new javax.swing.JLabel();
-        customerValidationLabel = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         unitPriceTextField = new javax.swing.JTextField();
         clearButton = new javax.swing.JButton();
+        customerValidationLbl = new javax.swing.JLabel();
+        itemValidationLbl = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
         setAlignmentX(0.0F);
@@ -95,6 +97,14 @@ public class OrderHome extends javax.swing.JInternalFrame {
         contentPanel.setMinimumSize(new java.awt.Dimension(1007, 400));
         contentPanel.setPreferredSize(new java.awt.Dimension(1007, 400));
         contentPanel.setLayout(null);
+
+        itemValidationLabel.setForeground(new java.awt.Color(255, 0, 0));
+        contentPanel.add(itemValidationLabel);
+        itemValidationLabel.setBounds(10, 260, 320, 0);
+
+        customerValidationLabel.setForeground(new java.awt.Color(255, 0, 0));
+        contentPanel.add(customerValidationLabel);
+        customerValidationLabel.setBounds(340, 260, 320, 0);
 
         jLabel6.setForeground(new java.awt.Color(0, 0, 0));
         jLabel6.setText("Quantity :");
@@ -330,14 +340,6 @@ public class OrderHome extends javax.swing.JInternalFrame {
         contentPanel.add(jLabel14);
         jLabel14.setBounds(340, 230, 130, 20);
 
-        itemValidationLabel.setForeground(new java.awt.Color(255, 0, 0));
-        contentPanel.add(itemValidationLabel);
-        itemValidationLabel.setBounds(10, 260, 320, 0);
-
-        customerValidationLabel.setForeground(new java.awt.Color(255, 0, 0));
-        contentPanel.add(customerValidationLabel);
-        customerValidationLabel.setBounds(340, 260, 320, 0);
-
         jLabel16.setForeground(new java.awt.Color(0, 0, 0));
         jLabel16.setText("Unit Price :");
         contentPanel.add(jLabel16);
@@ -358,6 +360,22 @@ public class OrderHome extends javax.swing.JInternalFrame {
         });
         contentPanel.add(clearButton);
         clearButton.setBounds(890, 360, 100, 30);
+
+        customerValidationLbl.setBackground(new java.awt.Color(255, 255, 255));
+        customerValidationLbl.setForeground(new java.awt.Color(255, 0, 0));
+        customerValidationLbl.setMaximumSize(new java.awt.Dimension(320, 16));
+        customerValidationLbl.setMinimumSize(new java.awt.Dimension(320, 16));
+        customerValidationLbl.setPreferredSize(new java.awt.Dimension(320, 16));
+        contentPanel.add(customerValidationLbl);
+        customerValidationLbl.setBounds(340, 260, 320, 16);
+
+        itemValidationLbl.setBackground(new java.awt.Color(255, 255, 255));
+        itemValidationLbl.setForeground(new java.awt.Color(255, 0, 0));
+        itemValidationLbl.setMaximumSize(new java.awt.Dimension(320, 16));
+        itemValidationLbl.setMinimumSize(new java.awt.Dimension(320, 16));
+        itemValidationLbl.setPreferredSize(new java.awt.Dimension(320, 16));
+        contentPanel.add(itemValidationLbl);
+        itemValidationLbl.setBounds(10, 260, 320, 16);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -394,12 +412,13 @@ public class OrderHome extends javax.swing.JInternalFrame {
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
         // TODO add your handling code here:
-        clearLabels();
+//        clearLabels();
+ itemValidationLabel.setText("Please Select an Item!");
         if(itemIDTextField.getText().isEmpty() || cusIDTextField.getText().isEmpty()){
             if(itemIDTextField.getText().isEmpty())
-                itemValidationLabel.setText("Please Select an Item!");
+                itemValidationLbl.setText("Please Select an Item!");
             if(cusIDTextField.getText().isEmpty())
-                customerValidationLabel.setText("Please Select a Customer!");
+                customerValidationLbl.setText("Please Select a Customer!");
         }else{
             Order order = new Order();
             order.setoIID(itemIDTextField.getText());
@@ -422,12 +441,12 @@ public class OrderHome extends javax.swing.JInternalFrame {
     private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
         // TODO add your handling code here:
         clearLabels();
-         if(selectedOrder.getoID().length() > 0){
+         if(selectedOrder.getoID() != null){
              if(itemIDTextField.getText().isEmpty() || cusIDTextField.getText().isEmpty()){
             if(itemIDTextField.getText().isEmpty())
-                itemValidationLabel.setText("Please Select an Item!");
+                itemValidationLbl.setText("Please Select an Item!");
             if(cusIDTextField.getText().isEmpty())
-                customerValidationLabel.setText("Please Select a Customer!");
+                customerValidationLbl.setText("Please Select a Customer!");
         }else{
             Order order = new Order();
             order.setoID(selectedOrder.getoID());
@@ -453,7 +472,7 @@ public class OrderHome extends javax.swing.JInternalFrame {
     private void deleteButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteButtonActionPerformed
         // TODO add your handling code here:
         clearLabels();
-        if(selectedOrder.getoID().length() > 0){
+        if(selectedOrder.getoID() != null){
             int input = JOptionPane.showConfirmDialog(null, "Do you want to delete Selected Order?", "Confirm Your Action",
                     JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.ERROR_MESSAGE);
             if (input == 0) {
@@ -525,8 +544,8 @@ public class OrderHome extends javax.swing.JInternalFrame {
         selectedOrder = new Order();
     }
     private void clearLabels(){
-        itemValidationLabel.setText("");
-        customerValidationLabel.setText("");
+        customerValidationLbl.setText("");
+        itemValidationLbl.setText("");
     }
     private void searchTable(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchTable
         // TODO add your handling code here:
@@ -597,6 +616,7 @@ public class OrderHome extends javax.swing.JInternalFrame {
     private javax.swing.JTextField cusIDTextField;
     private javax.swing.JTextField custNameTextField;
     private javax.swing.JLabel customerValidationLabel;
+    private javax.swing.JLabel customerValidationLbl;
     private javax.swing.JLabel dateLabel;
     private javax.swing.JButton deleteButton;
     private javax.swing.JButton generateReportButton;
@@ -604,6 +624,7 @@ public class OrderHome extends javax.swing.JInternalFrame {
     private javax.swing.JTextField itemNameTextField;
     private javax.swing.JTextField itemQuantityTextField;
     private javax.swing.JLabel itemValidationLabel;
+    private javax.swing.JLabel itemValidationLbl;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
